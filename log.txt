@@ -1,0 +1,123 @@
+¶ÁÈ¡ExcelÊ§°Ü: Pandas requires version '2.0.1' or newer of 'xlrd' (version '1.2.0' currently installed).
+ÏêÏ¸´íÎóĞÅÏ¢:
+Traceback (most recent call last):
+  File "D:\pmo\analyze_saturation.py", line 14, in <module>
+    df = pd.read_excel(r'd:\pmo\±¥ºÍ¶ÈÃ÷Ï¸±í_250703.xls', engine='xlrd')
+         ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Users\User\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\io\excel\_base.py", line 495, in read_excel
+    io = ExcelFile(
+        io,
+    ...<2 lines>...
+        engine_kwargs=engine_kwargs,
+    )
+  File "D:\Users\User\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\io\excel\_base.py", line 1567, in __init__
+    self._reader = self._engines[engine](
+                   ~~~~~~~~~~~~~~~~~~~~~^
+        self._io,
+        ^^^^^^^^^
+        storage_options=storage_options,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        engine_kwargs=engine_kwargs,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\Users\User\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\io\excel\_xlrd.py", line 45, in __init__
+    import_optional_dependency("xlrd", extra=err_msg)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Users\User\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\compat\_optional.py", line 164, in import_optional_dependency
+    raise ImportError(msg)
+ImportError: Pandas requires version '2.0.1' or newer of 'xlrd' (version '1.2.0' currently installed).
+¶ÁÈ¡ExcelÊ§°Ü: "There is no item named 'xl/_rels/workbook.bin.rels' in the archive"
+ÏêÏ¸´íÎóĞÅÏ¢:
+Traceback (most recent call last):
+  File "D:\pmo\analyze_saturation.py", line 14, in <module>
+    df = pd.read_excel(r'd:\pmo\±¥ºÍ¶ÈÃ÷Ï¸±í_250703.xls', engine='pyxlsb')
+         ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Users\User\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\io\excel\_base.py", line 495, in read_excel
+    io = ExcelFile(
+        io,
+    ...<2 lines>...
+        engine_kwargs=engine_kwargs,
+    )
+  File "D:\Users\User\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\io\excel\_base.py", line 1567, in __init__
+    self._reader = self._engines[engine](
+                   ~~~~~~~~~~~~~~~~~~~~~^
+        self._io,
+        ^^^^^^^^^
+        storage_options=storage_options,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        engine_kwargs=engine_kwargs,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\Users\User\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\io\excel\_pyxlsb.py", line 46, in __init__
+    super().__init__(
+    ~~~~~~~~~~~~~~~~^
+        filepath_or_buffer,
+        ^^^^^^^^^^^^^^^^^^^
+        storage_options=storage_options,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        engine_kwargs=engine_kwargs,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\Users\User\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\io\excel\_base.py", line 573, in __init__
+    self.book = self.load_workbook(self.handles.handle, engine_kwargs)
+                ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Users\User\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\io\excel\_pyxlsb.py", line 67, in load_workbook
+    return open_workbook(filepath_or_buffer, **engine_kwargs)
+  File "D:\Users\User\AppData\Roaming\Python\Python313\site-packages\pyxlsb\__init__.py", line 11, in open_workbook
+    return Workbook(fp=zf, debug=debug)
+  File "D:\Users\User\AppData\Roaming\Python\Python313\site-packages\pyxlsb\workbook.py", line 20, in __init__
+    self._parse()
+    ~~~~~~~~~~~^^
+  File "D:\Users\User\AppData\Roaming\Python\Python313\site-packages\pyxlsb\workbook.py", line 34, in _parse
+    with self._zf.open('xl/_rels/workbook.bin.rels', 'r') as zf:
+         ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Users\User\AppData\Local\Programs\Python\Python313\Lib\zipfile\__init__.py", line 1639, in open
+    zinfo = self.getinfo(name)
+  File "D:\Users\User\AppData\Local\Programs\Python\Python313\Lib\zipfile\__init__.py", line 1567, in getinfo
+    raise KeyError(
+        'There is no item named %r in the archive' % name)
+KeyError: "There is no item named 'xl/_rels/workbook.bin.rels' in the archive"
+¶ÁÈ¡ExcelÊ§°Ü: Pandas requires version '2.0.1' or newer of 'xlrd' (version '1.2.0' currently installed).
+ÏêÏ¸´íÎóĞÅÏ¢:
+Traceback (most recent call last):
+  File "D:\pmo\analyze_saturation.py", line 14, in <module>
+    df = pd.read_excel(r'd:\pmo\±¥ºÍ¶ÈÃ÷Ï¸±í_250703.xls')
+         ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Users\User\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\io\excel\_base.py", line 495, in read_excel
+    io = ExcelFile(
+        io,
+    ...<2 lines>...
+        engine_kwargs=engine_kwargs,
+    )
+  File "D:\Users\User\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\io\excel\_base.py", line 1567, in __init__
+    self._reader = self._engines[engine](
+                   ~~~~~~~~~~~~~~~~~~~~~^
+        self._io,
+        ^^^^^^^^^
+        storage_options=storage_options,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        engine_kwargs=engine_kwargs,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\Users\User\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\io\excel\_xlrd.py", line 45, in __init__
+    import_optional_dependency("xlrd", extra=err_msg)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Users\User\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\compat\_optional.py", line 164, in import_optional_dependency
+    raise ImportError(msg)
+ImportError: Pandas requires version '2.0.1' or newer of 'xlrd' (version '1.2.0' currently installed).
+¶ÁÈ¡ExcelÊ§°Ü: read_excel() got an unexpected keyword argument 'read_only'
+ÏêÏ¸´íÎóĞÅÏ¢:
+Traceback (most recent call last):
+  File "D:\pmo\analyze_saturation.py", line 14, in <module>
+    df = pd.read_excel(r'd:\pmo\±¥ºÍ¶ÈÃ÷Ï¸±í_250703.xls', engine='openpyxl', sheet_name=0, read_only=True)
+         ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: read_excel() got an unexpected keyword argument 'read_only'
+æˆåŠŸè¯»å–Excelæ–‡ä»¶ï¼Œå…±76è¡Œæ•°æ®
+æˆåŠŸè¯»å–Excelæ–‡ä»¶ï¼Œå…±76è¡Œæ•°æ®
+æ¸…æ´—å‰æ•°æ®é‡: 76è¡Œï¼Œæ¸…æ´—åæ•°æ®é‡: 65è¡Œ
+æˆåŠŸè¯»å–Excelæ–‡ä»¶ï¼Œå…±76è¡Œæ•°æ®
+æˆåŠŸè¯»å–Excelæ–‡ä»¶ï¼Œå…±76è¡Œæ•°æ®
