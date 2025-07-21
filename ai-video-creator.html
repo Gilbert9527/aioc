@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI视频创作 - 贝壳OC智能应用中心</title>
+    <meta name="description" content="利用AI技术，轻松创建专业级视频内容">
+    <meta name="keywords" content="贝壳OC, AI视频, 视频创作, 智能生成">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="enhanced-styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <style>
+        /* 视频创作页面特定样式 - 蓝白配色方案 */
+        :root {
+            --primary-blue: #0084FF;
+            --secondary-blue: #39A5FF;
+            --light-blue: #e8f0fe;
+            --dark-blue: #0073E6;
+            --darker-blue: #0062C4;
+            --white: #ffffff;
+            --light-gray: #f8f9fa;
+            --medium-gray: #dadce0;
+            --dark-gray: #5f6368;
+            --black: #202124;
+        }
+
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            color: var(--black);
+            background-color: var(--white);
+            margin: 0;
+            padding: 0;
+        }
+
+        .page-header {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 25%, var(--secondary-blue) 50%, var(--primary-blue) 75%, var(--dark-blue) 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            color: var(--white);
+            padding: 80px 0 60px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect fill="rgba(255,255,255,0.05)" width="50" height="50" x="0" y="0" /><rect fill="rgba(255,255,255,0.05)" width="50" height="50" x="50" y="50" /></svg>');
+            background-size: 30px 30px;
+            opacity: 0.3;
+            z-index: 1;
+            animation: patternMove 20s linear infinite;
+        }
+
+        .page-header h1 {
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            position: relative;
+            z-index: 2;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+        }
+
+        .page-header p {
+            font-size: 18px;
+            opacity: 0.9;
+            position: relative;
+            z-index: 2;
+        }
+
+        .video-creator-section {
+            background: linear-gradient(135deg, var(--light-gray) 0%, var(--light-blue) 100%);
+            padding: 60px 0;
+        }
+
+        .video-creator-container {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+            height: calc(100vh - 140px); /* Adjust height to fit in viewport without scrolling */
+        }
+
+        .video-config-panel {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 15px 35px rgba(26, 115, 232, 0.1);
+            border: 1px solid rgba(26, 115, 232, 0.1);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto; /* Make panel scrollable */
+            max-height: 100%; /* Limit height to container */
+        }
+
+        .video-config-panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-blue), var(--secondary-blue), var(--primary-blue), var(--dark-blue));
+        }
+
+        .video-config-panel h2 {
+            color: var(--primary-blue);
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            background: linear-gradient(45deg, var(--primary-blue), var(--secondary-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .video-config-panel > p {
+            color: var(--dark-gray);
+            margin-bottom: 30px;
+            font-size: 16px;
+        }
+
+        .video-display-panel {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 15px 35px rgba(26, 115, 232, 0.1);
+            display: flex;
+            flex-direction: column;
+            border: 1px solid rgba(26, 115, 232, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .video-display-panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-blue), var(--secondary-blue), var(--primary-blue), var(--dark-blue));
+        }
+
+        .video-display-panel h2 {
+            color: var(--primary-blue);
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, var(--primary-blue), var(--secondary-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--black);
+            font-size: 14px;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="number"],
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid var(--medium-gray);
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: var(--light-gray);
+            font-family: 'Noto Sans SC', sans-serif;
+        }
+
+        .form-group input[type="text"]:focus,
+        .form-group input[type="number"]:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.1);
+            outline: none;
+            background: var(--white);
+        }
+
+        .form-group textarea {
+            min-height: 80px;
+            resize: vertical;
+            line-height: 1.6;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .generate-btn {
+            background: linear-gradient(45deg, var(--primary-blue), var(--dark-blue));
+            color: var(--white);
+            border: none;
+            padding: 16px 32px;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(26, 115, 232, 0.3);
+            width: 100%;
+            margin-top: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .generate-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .generate-btn:hover::before {
+            left: 100%;
+        }
+
+        .generate-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(26, 115, 232, 0.4);
+        }
+
+        .generate-btn:disabled {
+            background: linear-gradient(45deg, var(--light-gray), var(--medium-gray));
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .video-container {
+            background: linear-gradient(135deg, var(--light-gray) 0%, var(--light-blue) 100%);
+            border-radius: 16px;
+            overflow: hidden;
+            position: relative;
+            aspect-ratio: 16/9;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-grow: 1;
+            border: 2px solid rgba(26, 115, 232, 0.1);
+            box-shadow: inset 0 2px 10px rgba(26, 115, 232, 0.05);
+        }
+
+        .video-container video {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 14px;
+        }
+
+        .video-placeholder {
+            text-align: center;
+            color: var(--dark-gray);
+        }
+
+        .video-placeholder .icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, var(--primary-blue), var(--secondary-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .video-placeholder p {
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: var(--black);
+        }
+
+        .video-placeholder .hint {
+            font-size: 14px;
+            color: var(--dark-gray);
+        }
+
+        .download-btn {
+            background: linear-gradient(45deg, var(--primary-blue), var(--dark-blue));
+            color: var(--white);
+            border: none;
+            padding: 14px 28px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+            box-shadow: 0 6px 16px rgba(26, 115, 232, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .download-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .download-btn:hover::before {
+            left: 100%;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(26, 115, 232, 0.4);
+        }
+
+        .download-btn:disabled {
+            background: linear-gradient(45deg, var(--light-gray), var(--medium-gray));
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .loading-indicator {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(26, 115, 232, 0.1);
+            border-left-color: var(--primary-blue);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+
+        .loading-indicator p {
+            color: var(--primary-blue);
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .loading-indicator .hint {
+            color: var(--dark-gray);
+            font-size: 14px;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .error-message {
+            color: #d93025;
+            background: rgba(217, 48, 37, 0.1);
+            padding: 12px 16px;
+            border-radius: 12px;
+            margin-top: 15px;
+            font-size: 14px;
+            display: none;
+            border-left: 4px solid #d93025;
+        }
+
+        .success-message {
+            color: #137333;
+            background: rgba(19, 115, 51, 0.1);
+            padding: 12px 16px;
+            border-radius: 12px;
+            margin-top: 15px;
+            font-size: 14px;
+            display: none;
+            border-left: 4px solid #137333;
+        }
+
+        /* 导航栏样式 */
+        .header {
+            background: var(--white);
+            border-bottom: 1px solid rgba(26, 115, 232, 0.1);
+            box-shadow: 0 2px 10px rgba(26, 115, 232, 0.05);
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0;
+        }
+
+        .logo-link {
+            text-decoration: none;
+        }
+
+        .logo-text {
+            font-size: 24px;
+            font-weight: 600;
+            background: linear-gradient(45deg, var(--primary-blue), var(--secondary-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 0;
+        }
+
+        .nav-btn {
+            background: linear-gradient(45deg, var(--primary-blue), var(--dark-blue));
+            color: var(--white);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            box-shadow: 0 4px 12px rgba(26, 115, 232, 0.2);
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(26, 115, 232, 0.3);
+        }
+
+        /* 页面加载动画 */
+        .page-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        .page-loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .loader-circle {
+            width: 20px;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            margin: 0 8px;
+            animation: bounce 1.4s infinite ease-in-out both;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+        }
+
+        .loader-circle:nth-child(1) {
+            animation-delay: -0.32s;
+        }
+
+        .loader-circle:nth-child(2) {
+            animation-delay: -0.16s;
+        }
+
+        @keyframes bounce {
+            0%, 80%, 100% {
+                transform: scale(0);
+            }
+            40% {
+                transform: scale(1);
+            }
+        }
+
+        /* 滚动指示器 */
+        .scroll-indicator {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: rgba(26, 115, 232, 0.2);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 100;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .scroll-indicator.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .scroll-indicator span {
+            width: 10px;
+            height: 10px;
+            border-left: 2px solid var(--white);
+            border-top: 2px solid var(--white);
+            transform: rotate(45deg) translate(3px, 3px);
+        }
+
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            .video-creator-container {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .video-config-panel,
+            .video-display-panel {
+                padding: 30px 20px;
+            }
+            
+            .page-header h1 {
+                font-size: 32px;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+        }
+
+        /* 动画效果 */
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes patternMove {
+            0% { background-position: 0 0; }
+            100% { background-position: 100px 100px; }
+        }
+
+        /* 页脚样式 */
+        .footer {
+            background: linear-gradient(135deg, var(--light-gray) 0%, var(--light-blue) 100%);
+            padding: 40px 0;
+            border-top: 1px solid rgba(26, 115, 232, 0.1);
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .footer-links a {
+            color: var(--dark-gray);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-blue);
+        }
+
+        .footer-info {
+            color: var(--dark-gray);
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 页面加载动画 -->
+    <div class="page-loader">
+        <div class="loader-logo">
+            <div class="loader-circle"></div>
+            <div class="loader-circle"></div>
+            <div class="loader-circle"></div>
+        </div>
+    </div>
+
+    <!-- 滚动指示器 -->
+    <div class="scroll-indicator" id="scrollTop">
+        <span></span>
+    </div>
+
+    <!-- 简化的导航栏 -->
+    <header class="header">
+        <div class="container">
+            <div class="nav">
+                <div class="nav-left">
+                    <a href="index.html" class="logo-link">
+                        <h1 class="logo-text">贝壳OC智能应用中心</h1>
+                    </a>
+                </div>
+                <a href="index.html" class="nav-btn">返回首页</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- 主要内容区域 -->
+    <main>
+
+        <section class="video-creator-section">
+            <div class="container">
+                <div class="video-creator-container">
+                    <!-- 左侧配置面板 -->
+                    <div class="video-config-panel">
+                        <h2>视频生成配置</h2>
+                        <p>请填写以下参数来生成您的AI视频</p>
+
+                        <form id="videoGenerationForm">
+                            <!-- 提示词 -->
+                            <div class="form-group">
+                                <label for="prompt">提示词描述 *</label>
+                                <textarea id="prompt" name="prompt" placeholder="详细描述您想要生成的视频内容，例如：一只猫在阳光明媚的花园里玩耍" required></textarea>
+                            </div>
+
+                            <!-- 负面提示词 -->
+                            <div class="form-group">
+                                <label for="negative_prompt">负面提示词</label>
+                                <textarea id="negative_prompt" name="negative_prompt" placeholder="描述您不希望在视频中出现的元素，例如：模糊的，低质量的，扭曲的"></textarea>
+                            </div>
+
+                            <!-- 模型选择 -->
+                            <div class="form-group">
+                                <label for="model">模型选择 *</label>
+                                <select id="model" name="model" required>
+                                    <option value="pollo-v1-6" selected>Pollo v1.6</option>
+                                    <option value="pollo-v1-5">Pollo v1.5</option>
+                                </select>
+                            </div>
+
+                            <!-- 尺寸设置 -->
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="width">宽度 (像素)</label>
+                                    <input type="number" id="width" name="width" value="768" min="512" max="1024" step="256">
+                                </div>
+                                <div class="form-group">
+                                    <label for="height">高度 (像素)</label>
+                                    <input type="number" id="height" name="height" value="768" min="512" max="1024" step="256">
+                                </div>
+                            </div>
+
+
+
+                            <div class="form-group">
+                                <label for="style">视频风格</label>
+                                <select id="style" name="style">
+                                    <option value="cinematic" selected>电影风格</option>
+                                    <option value="anime">动漫风格</option>
+                                    <option value="realistic">写实风格</option>
+                                    <option value="3d">3D风格</option>
+                                </select>
+                            </div>
+
+                            <div class="error-message" id="errorMessage"></div>
+                            <div class="success-message" id="successMessage"></div>
+
+                            <button type="submit" class="generate-btn" id="generateBtn">生成视频</button>
+                        </form>
+                    </div>
+
+                    <!-- 右侧视频展示面板 -->
+                    <div class="video-display-panel">
+                        <h2>视频预览</h2>
+                        <div class="video-container" id="videoContainer">
+                            <div class="video-placeholder" id="videoPlaceholder">
+                                <div class="icon">🎬</div>
+                                <p>视频将在这里显示</p>
+                                <p class="hint">填写左侧表单并点击"生成视频"按钮</p>
+                            </div>
+                            <!-- 视频元素将在生成后动态添加 -->
+                        </div>
+
+                        <button class="download-btn" id="downloadBtn" disabled>
+                            <span class="icon">📥</span>
+                            <span>下载视频</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-links">
+                    <a href="#">隐私政策</a>
+                    <a href="#">使用条款</a>
+                    <a href="#">关于我们</a>
+                    <a href="#">产品</a>
+                </div>
+                <div class="footer-info">
+                    <p>&copy; 2024 贝壳OC智能应用中心 版权所有</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // 表单提交处理
+            const form = document.getElementById('videoGenerationForm');
+            const generateBtn = document.getElementById('generateBtn');
+            const videoContainer = document.getElementById('videoContainer');
+            const videoPlaceholder = document.getElementById('videoPlaceholder');
+            const downloadBtn = document.getElementById('downloadBtn');
+            const errorMessage = document.getElementById('errorMessage');
+            const successMessage = document.getElementById('successMessage');
+
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+                
+                // 显示加载状态
+                generateBtn.disabled = true;
+                generateBtn.textContent = '生成中...';
+                errorMessage.style.display = 'none';
+                successMessage.style.display = 'none';
+                
+                // 替换视频容器内容为加载指示器
+                videoPlaceholder.style.display = 'none';
+                const loadingIndicator = document.createElement('div');
+                loadingIndicator.className = 'loading-indicator';
+                loadingIndicator.innerHTML = `
+                    <div class="spinner"></div>
+                    <p>正在生成视频，请稍候...</p>
+                    <p class="hint">视频生成可能需要几分钟时间</p>
+                `;
+                videoContainer.appendChild(loadingIndicator);
+                
+                // 收集表单数据
+                const formData = new FormData(form);
+                const requestData = {};
+                
+                formData.forEach((value, key) => {
+                    // 只添加有值的字段
+                    if (value !== '') {
+                        // 对数字类型的字段进行转换
+                        if (['width', 'height', 'num_frames', 'fps', 'seed'].includes(key)) {
+                            requestData[key] = parseInt(value);
+                        } else if (['guidance_scale', 'motion_strength'].includes(key)) {
+                            requestData[key] = parseFloat(value);
+                        } else {
+                            requestData[key] = value;
+                        }
+                    }
+                });
+                
+                console.log('生成视频请求参数:', requestData);
+                
+                // 模拟API调用
+                // 在实际应用中，这里应该是对Pollo AI API的调用
+                setTimeout(() => {
+                    // 移除加载指示器
+                    loadingIndicator.remove();
+                    
+                    // 模拟成功响应
+                    const mockResponse = {
+                        status: 'success',
+                        task_id: 'task_' + Math.random().toString(36).substring(2, 10),
+                        videos: [
+                            {
+                                url: 'https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4', // 示例视频URL
+                                format: 'mp4',
+                                width: requestData.width || 768,
+                                height: requestData.height || 768,
+                                frames: requestData.num_frames || 24,
+                                fps: requestData.fps || 8
+                            }
+                        ],
+                        metadata: {
+                            prompt: requestData.prompt,
+                            negative_prompt: requestData.negative_prompt,
+                            seed: requestData.seed || Math.floor(Math.random() * 1000000),
+                            model: requestData.model,
+                            generation_time: 15.7
+                        }
+                    };
+                    
+                    // 显示生成的视频
+                    const videoElement = document.createElement('video');
+                    videoElement.controls = true;
+                    videoElement.autoplay = false;
+                    videoElement.src = mockResponse.videos[0].url;
+                    videoElement.addEventListener('loadedmetadata', function() {
+                        // 视频加载成功
+                        successMessage.textContent = '视频生成成功！';
+                        successMessage.style.display = 'block';
+                    });
+                    videoElement.addEventListener('error', function() {
+                        // 视频加载失败
+                        errorMessage.textContent = '视频加载失败，请重试。';
+                        errorMessage.style.display = 'block';
+                    });
+                    
+                    videoContainer.innerHTML = '';
+                    videoContainer.appendChild(videoElement);
+                    
+                    // 启用下载按钮
+                    downloadBtn.disabled = false;
+                    downloadBtn.onclick = function() {
+                        // 创建一个下载链接
+                        const a = document.createElement('a');
+                        a.href = mockResponse.videos[0].url;
+                        a.download = 'ai-generated-video.mp4';
+                        document.body.appendChild(a);
+                        a.click();
+                        document.body.removeChild(a);
+                    };
+                    
+                    // 恢复生成按钮状态
+                    generateBtn.disabled = false;
+                    generateBtn.textContent = '生成视频';
+                    
+                }, 3000); // 模拟3秒的生成时间
+            });
+            
+            // 页面加载动画
+            window.addEventListener('load', function () {
+                document.body.classList.add('loaded');
+                
+                // 隐藏加载动画
+                setTimeout(function () {
+                    document.querySelector('.page-loader').classList.add('hidden');
+                }, 500);
+            });
+            
+            // 滚动指示器
+            const scrollIndicator = document.getElementById('scrollTop');
+            if (scrollIndicator) {
+                // 显示/隐藏滚动指示器
+                window.addEventListener('scroll', function () {
+                    if (window.scrollY > 300) {
+                        scrollIndicator.classList.add('visible');
+                    } else {
+                        scrollIndicator.classList.remove('visible');
+                    }
+                });
+                
+                // 点击滚动到顶部
+                scrollIndicator.addEventListener('click', function () {
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>

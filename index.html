@@ -48,7 +48,7 @@
             <h1 class="hero-title" data-text="贝壳OC智能应用中心">贝壳OC智能应用中心</h1>
             <p class="hero-subtitle">探索最新的创新工具和实验，体验前沿科技与服务</p>
             <div class="hero-cta">
-                <button class="hero-btn secondary">了解更多</button>
+                <button class="hero-btn secondary" onclick="window.location.href='ai-video-creator.html'">了解更多</button>
             </div>
         </div>
         <div class="hero-animation">
@@ -92,7 +92,7 @@
                             </div>
                         </div>
                     </div>
-                    <button class="video-cta-btn" onclick="window.open('https://www.example.com/ai-video', '_blank')">立即使用</button>
+                    <button class="video-cta-btn" onclick="window.location.href='ai-video-creator.html'">立即使用</button>
                 </div>
                 <div class="video-player">
                     <div class="video-container">
@@ -540,17 +540,11 @@
                 });
             }
 
-            // 了解更多按钮点击事件
+            // 了解更多按钮点击事件 - 跳转到AI视频创作页面
             const learnMoreButton = document.querySelector('.hero-btn.secondary');
             if (learnMoreButton) {
                 learnMoreButton.addEventListener('click', function () {
-                    const aiToolsSection = document.getElementById('ai-tools');
-                    if (aiToolsSection) {
-                        aiToolsSection.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
-                    }
+                    window.location.href = 'ai-video-creator.html';
                 });
             }
 
