@@ -4,7 +4,68 @@
  */
 
 document.addEventListener('DOMContentLoaded', function() {
-    // 鼠标跟踪效果已移除
+    // 视频播放器交互效果
+    const videoContainer = document.querySelector('.video-container');
+    const playIcon = document.querySelector('.play-icon');
+    
+    if (videoContainer && playIcon) {
+        // 添加悬停效果
+        videoContainer.addEventListener('mouseenter', function() {
+            gsap.to(playIcon, {
+                scale: 1.1,
+                duration: 0.3,
+                ease: "power2.out",
+                backgroundColor: "rgba(255, 255, 255, 0.3)",
+                boxShadow: "0 15px 30px rgba(0, 0, 0, 0.3)"
+            });
+        });
+        
+        videoContainer.addEventListener('mouseleave', function() {
+            gsap.to(playIcon, {
+                scale: 1,
+                duration: 0.3,
+                ease: "power2.out",
+                backgroundColor: "rgba(255, 255, 255, 0.2)",
+                boxShadow: "0 10px 20px rgba(0, 0, 0, 0.2)"
+            });
+        });
+        
+        // 添加点击效果
+        playIcon.addEventListener('click', function() {
+            // 这里可以添加视频播放逻辑
+            // 例如：显示一个模态框播放视频
+            alert('视频播放功能将在这里实现');
+        });
+        
+        // 添加3D视差效果
+        videoContainer.addEventListener('mousemove', function(e) {
+            const rect = this.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            
+            const moveX = (x - centerX) / 20;
+            const moveY = (y - centerY) / 20;
+            
+            gsap.to(this, {
+                rotateY: moveX * 2,
+                rotateX: -moveY * 2,
+                duration: 0.5,
+                ease: "power2.out"
+            });
+        });
+        
+        videoContainer.addEventListener('mouseleave', function() {
+            gsap.to(this, {
+                rotateY: 0,
+                rotateX: 0,
+                duration: 0.5,
+                ease: "power2.out"
+            });
+        });
+    }
     
     // 粒子效果
     const particlesConfig = {
